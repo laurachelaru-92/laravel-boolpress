@@ -10922,6 +10922,22 @@ a.text-dark:focus {
   margin-bottom: 40px;
 }
 
+#guest-showpost-wrapper {
+  text-align: center;
+}
+
+#guest-showpost-wrapper h5 {
+  margin: 15px 0 50px 0;
+}
+
+#admin-show-wrapper {
+  text-align: center;
+}
+
+#admin-show-wrapper #actions {
+  text-align: right;
+}
+
 body {
   font-family: "Nunito", sans-serif;
 }

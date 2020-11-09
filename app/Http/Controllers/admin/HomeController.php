@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $posts = Article::all();
 
-        return view('guest.posts', compact("posts"));
+        return view('admin.index', compact("posts"));
     }
 
     /**
@@ -47,9 +47,11 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $post = Article::where('slug', $slug)->first();
+
+        return view('admin.show', compact("post"));
     }
 
     /**

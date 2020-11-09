@@ -20,7 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/posts', 'HomeController@index')->name('posts');
+Route::get('/posts/show/{slug}', 'HomeController@show')->name('posts.show');
 
 Route::prefix('admin')->name('admin/')->namespace('Admin')->middleware('auth')->group(function(){
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/posts', 'HomeController@index')->name('posts');
+    Route::get('/posts/show/{slug}', 'HomeController@show')->name('posts/show');
 });

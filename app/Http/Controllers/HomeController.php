@@ -18,4 +18,17 @@ class HomeController extends Controller
 
         return view('guest.posts', compact("posts"));
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($slug)
+    {
+        $post = Article::where('slug', $slug)->first();
+
+        return view('guest.showpost', compact("post"));
+    }
 }
