@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Article;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        dd('hello');
+        $posts = Article::all();
+
+        return view('guest.posts', compact("posts"));
     }
 
     /**

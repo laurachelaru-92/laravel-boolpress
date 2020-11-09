@@ -10918,6 +10918,10 @@ a.text-dark:focus {
   font-size: 30px;
 }
 
+#guest-posts-wrapper .card {
+  margin-bottom: 40px;
+}
+
 body {
   font-family: "Nunito", sans-serif;
 }
