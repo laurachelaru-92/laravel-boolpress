@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Article;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,7 +29,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.create');
     }
 
     /**
@@ -38,7 +40,23 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $request->validate([
+            'title' => 'required|max:50',
+            'content' => 'required|min:30'
+        ]);
+
+        $newpost = new Article;
+        $newpost->user_id = Auth::id();
+        $newpost->title = $data['title'];
+        $newpost->content = $data['content'];
+        $newpost->slug = Str::of($newpost->title)->slug('-');
+
+        $newpost->save();
+
+        return redirect()->route('admin/posts.show', $newpost->slug);
+
     }
 
     /**
@@ -60,9 +78,11 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $post = Article::where('slug', $slug)->first();
+
+        return view('admin.edit', compact("post"));
     }
 
     /**
@@ -74,7 +94,21 @@ class HomeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        $request->validate([
+            'title' => 'required|max:50',
+            'content' => 'required|min:30'
+        ]);
+
+        $post = Article::find($id);
+        $post->title = $data['title'];
+        $post->content = $data['content'];
+        $post->slug = Str::of($post->title)->slug('-');
+
+        $post->update();
+
+        return redirect()->route('admin/posts.show', $post->slug);
     }
 
     /**

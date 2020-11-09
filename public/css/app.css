@@ -10904,8 +10904,7 @@ a.text-dark:focus {
 }
 
 #laura-home-wrapper {
-  width: 70%;
-  margin: 50px auto;
+  margin-top: 100px;
   text-align: center;
 }
 
@@ -10918,12 +10917,23 @@ a.text-dark:focus {
   font-size: 30px;
 }
 
+#laura-home-wrapper #create-new {
+  position: absolute;
+  top: 80px;
+  right: 100px;
+}
+
+#laura-home-wrapper #create-new a {
+  font-size: 20px;
+}
+
 #guest-posts-wrapper .card {
   margin-bottom: 40px;
 }
 
 #guest-showpost-wrapper {
   text-align: center;
+  margin-top: 100px;
 }
 
 #guest-showpost-wrapper h5 {
@@ -10938,7 +10948,18 @@ a.text-dark:focus {
   text-align: right;
 }
 
+#admin-index-wrapper #create-new {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
 body {
   font-family: "Nunito", sans-serif;
+  background-color: #dfdbe5;
+  background-image: url(/images/wiggle.svg?1172657e9a12bd292da951ea2e47a2f5);
+}
+
+.navbar {
+  opacity: 0.8;
 }
 

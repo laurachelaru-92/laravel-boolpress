@@ -7,8 +7,8 @@
         <p>{{$post->content}}</p>
         @if(Auth::id() == $post->user_id)
             <div id="actions">
-                <a href="#" class="btn btn-warning">Edit</a>
-                <a href="#" class="btn btn-danger">Delete</a>
+                <a href="{{route('admin/posts.edit', $post->slug)}}" class="btn btn-warning">Edit</a>
+                <a href="{{route('admin/posts.destroy', $post->id)}}" class="btn btn-danger">Delete</a>
             </div>
         @endif
     </div>
