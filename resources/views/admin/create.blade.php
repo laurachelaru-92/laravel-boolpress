@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" id="admin-create-wrapper">
+    <div class="container" id="admin-create-wrapper" enctype="multipart/form-data">
         <form action="{{route('admin/posts.store')}}" method="POST">
             @csrf
             @method('POST')
@@ -9,6 +9,14 @@
                 <label for="title">Title</label>
                 <input required type="text" name="title" class="form-control" id="title" placeholder="The title of your post..." maxlength="50" value="{{old('title')}}">
                 @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" class="form-control" id="image" placeholder="Add an image..." accept="image/*">
+                @error('image')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>

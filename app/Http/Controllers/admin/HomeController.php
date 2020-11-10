@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Article;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -44,12 +45,17 @@ class HomeController extends Controller
 
         $request->validate([
             'title' => 'required|max:50',
-            'content' => 'required|min:30'
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|nullable',
+            'content' => 'required|min:30',
         ]);
-
+            dd($data);
+        
         $newpost = new Article;
         $newpost->user_id = Auth::id();
         $newpost->title = $data['title'];
+        if($data['image']) {
+            $newpost->image = $data['image'];
+        }
         $newpost->content = $data['content'];
         $newpost->slug = Str::of($newpost->title)->slug('-');
 
@@ -98,11 +104,15 @@ class HomeController extends Controller
 
         $request->validate([
             'title' => 'required|max:50',
+            'image' => 'image|nullable',
             'content' => 'required|min:30'
         ]);
 
         $post = Article::find($id);
         $post->title = $data['title'];
+        if($data['image']) {
+            $post->image = $data['image'];
+        }
         $post->content = $data['content'];
         $post->slug = Str::of($post->title)->slug('-');
 

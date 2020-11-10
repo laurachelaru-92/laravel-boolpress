@@ -10933,7 +10933,7 @@ a.text-dark:focus {
 
 #guest-showpost-wrapper {
   text-align: center;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 
 #guest-showpost-wrapper h5 {
@@ -10942,10 +10942,15 @@ a.text-dark:focus {
 
 #admin-show-wrapper {
   text-align: center;
+  margin-top: 30px;
 }
 
 #admin-show-wrapper #actions {
   text-align: right;
+}
+
+#admin-show-wrapper img {
+  margin-bottom: 20px;
 }
 
 #admin-index-wrapper #create-new {
