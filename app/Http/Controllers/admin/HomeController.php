@@ -45,16 +45,18 @@ class HomeController extends Controller
 
         $request->validate([
             'title' => 'required|max:50',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|nullable',
+            'image' => 'nullable',
             'content' => 'required|min:30',
         ]);
-            dd($data);
         
+        $path = Storage::disk('public')->put('images', $data['image']);
+        dd($path);
+
         $newpost = new Article;
         $newpost->user_id = Auth::id();
         $newpost->title = $data['title'];
         if($data['image']) {
-            $newpost->image = $data['image'];
+            $newpost->image = $path;
         }
         $newpost->content = $data['content'];
         $newpost->slug = Str::of($newpost->title)->slug('-');
