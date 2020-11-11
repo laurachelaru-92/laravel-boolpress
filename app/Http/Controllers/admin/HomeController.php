@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Article;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
-
+use App\Mail\PostedMail;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -51,18 +51,20 @@ class HomeController extends Controller
             'content' => 'required|min:30',
         ]);
         
-        $path = Storage::disk('public')->putFile('images', $data['image']);
-        
         $newpost = new Article;
         $newpost->user_id = Auth::id();
         $newpost->title = $data['title'];
-        if($data['image']) {
+        if(array_key_exists ('image',$data) == true) {
+            $path = Storage::disk('public')->putFile('images', $data['image']);
             $newpost->image = $path;
         }
         $newpost->content = $data['content'];
         $newpost->slug = Str::of($newpost->title)->slug('-');
 
         $newpost->save();
+        
+        // Send and email to the user to confirm posted article
+        Mail::to($newpost->user->email)->send(new PostedMail($newpost));
 
         return redirect()->route('admin/posts.show', $newpost->slug);
 
@@ -111,11 +113,11 @@ class HomeController extends Controller
             'content' => 'required|min:30'
         ]);
 
-        $path = Storage::disk('public')->putFile('images', $data['image']);
-
+        
         $post = Article::find($id);
         $post->title = $data['title'];
-        if($data['image']) {
+        if(array_key_exists ('image',$data) == true) {
+            $path = Storage::disk('public')->putFile('images', $data['image']);
             $post->image = $path;
         }
         $post->content = $data['content'];
