@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Article;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
+
 
 class HomeController extends Controller
 {
@@ -42,16 +44,15 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
+        
         $request->validate([
-            'title' => 'required|max:50',
-            'image' => 'nullable',
+            'title' => 'required|max:50|unique:articles',
+            'image' => 'image|nullable',
             'content' => 'required|min:30',
         ]);
         
-        $path = Storage::disk('public')->put('images', $data['image']);
-        dd($path);
-
+        $path = Storage::disk('public')->putFile('images', $data['image']);
+        
         $newpost = new Article;
         $newpost->user_id = Auth::id();
         $newpost->title = $data['title'];
@@ -110,10 +111,12 @@ class HomeController extends Controller
             'content' => 'required|min:30'
         ]);
 
+        $path = Storage::disk('public')->putFile('images', $data['image']);
+
         $post = Article::find($id);
         $post->title = $data['title'];
         if($data['image']) {
-            $post->image = $data['image'];
+            $post->image = $path;
         }
         $post->content = $data['content'];
         $post->slug = Str::of($post->title)->slug('-');
@@ -131,6 +134,11 @@ class HomeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Article::find($id);
+
+        Storage::disk('public')->delete('image/'.$post->image);
+        $post->delete();
+
+        return redirect()->route('admin/posts.index');
     }
 }

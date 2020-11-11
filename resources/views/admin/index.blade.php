@@ -17,7 +17,11 @@
                     <a href="{{route('admin/posts.show', $post->slug)}}" class="btn btn-primary">Show more</a>
                     @if(Auth::id() == $post->user_id)
                         <a href="{{route('admin/posts.edit', $post->slug)}}" class="btn btn-warning">Edit</a>
-                        <a href="{{route('admin/posts.destroy', $post->id)}}" class="btn btn-danger">Delete</a>
+                        <form action="{{route('admin/posts.destroy', $post->id)}}" method="POST">
+                            @csrf
+                            @method("DELETE")
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     @endif
                 </div>
             </div>

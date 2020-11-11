@@ -10940,6 +10940,19 @@ a.text-dark:focus {
   margin: 15px 0 50px 0;
 }
 
+#admin-index-wrapper .card {
+  margin-bottom: 40px;
+}
+
+#admin-index-wrapper #create-new {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+#admin-index-wrapper form {
+  display: inline-block;
+}
+
 #admin-show-wrapper {
   text-align: center;
   margin-top: 30px;
@@ -10953,9 +10966,8 @@ a.text-dark:focus {
   margin-bottom: 20px;
 }
 
-#admin-index-wrapper #create-new {
-  text-align: right;
-  margin-bottom: 20px;
+#admin-show-wrapper form {
+  display: inline-block;
 }
 
 body {

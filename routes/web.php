@@ -30,3 +30,8 @@ Route::prefix('admin')->name('admin/')->namespace('Admin')->middleware('auth')->
     // Route::get('/posts/edit/{slug}', 'HomeController@update')->name('posts/update');
     // Route::get('/posts/destroy/{id}', 'HomeController@destroy')->name('posts/destroy');
 });
+
+//Mail
+Route::get('/mail', function(){
+    return view('guest/posted_mail');
+});
