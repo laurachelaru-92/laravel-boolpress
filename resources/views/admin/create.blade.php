@@ -12,6 +12,25 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+            
+            <div class="form-group">
+                <h6>Tags</h6>
+                <ul>
+                    @foreach ($tags as $tag)
+                    <li>
+                        <input name="tags[]" type="checkbox" value="{{$tag->id}}" id="{{$tag->id}}" 
+                        {{-- @if (old())
+                        checked
+                        @endif --}}
+                        >
+                        <label for="{{$tag->id}}">{{$tag->name}}</label>
+                    </li>
+                    @endforeach
+                </ul>
+                @error('tags')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
             <div class="form-group">
                 <label for="image">Image</label>

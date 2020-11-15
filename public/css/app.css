@@ -10970,6 +10970,31 @@ a.text-dark:focus {
   display: inline-block;
 }
 
+#admin-show-wrapper #tags {
+  margin-bottom: 20px;
+}
+
+#admin-show-wrapper #tags #tags-title {
+  font-weight: bold;
+}
+
+#admin-show-wrapper #tags span {
+  margin-left: 10px;
+}
+
+#admin-edit-wrapper ul {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+#admin-edit-wrapper ul li {
+  border: 1px solid #ced4da;
+  padding: 5px 10px;
+  margin: 0;
+}
+
 body {
   font-family: "Nunito", sans-serif;
   background-color: #dfdbe5;

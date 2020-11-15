@@ -10,6 +10,14 @@
         @else
             <img src="{{asset('storage/'.$post->image)}}" alt="">
         @endif
+        @if(!empty($post->tags))
+        <div id="tags">
+            <span id="tags-title">Tags: </span>
+            @foreach ($post->tags as $tag)
+            <span>{{$tag->name}}</span>
+            @endforeach
+        </div>
+        @endif
         @if(Auth::id() == $post->user_id)
             <div id="actions">
                 <a href="{{route('admin/posts.edit', $post->slug)}}" class="btn btn-warning">Edit</a>

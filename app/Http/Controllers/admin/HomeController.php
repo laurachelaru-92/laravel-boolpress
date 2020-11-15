@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\PostedMail;
 use Illuminate\Support\Facades\Mail;
+use App\Tag;
 
 class HomeController extends Controller
 {
@@ -32,7 +33,9 @@ class HomeController extends Controller
      */
     public function create()
     {
-        return view('admin.create');
+        $tags = Tag::all();
+
+        return view('admin.create', compact('tags'));
     }
 
     /**
@@ -44,7 +47,7 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        
+        dd($data);
         $request->validate([
             'title' => 'required|max:50|unique:articles',
             'image' => 'image|nullable',
@@ -57,6 +60,13 @@ class HomeController extends Controller
         if(array_key_exists ('image',$data) == true) {
             $path = Storage::disk('public')->putFile('images', $data['image']);
             $newpost->image = $path;
+        }
+        if(count($data['tags']) > 0) {
+            foreach($data['tags'] as $tag) {
+                $newpost->tags()->sync([
+                    $newpost->id => $tag
+                    ]);
+            }
         }
         $newpost->content = $data['content'];
         $newpost->slug = Str::of($newpost->title)->slug('-');
@@ -91,9 +101,17 @@ class HomeController extends Controller
      */
     public function edit($slug)
     {
+        $thisPost = Article::where("slug", $slug)->first();
+        $tagsArray = [];
+        foreach($thisPost->tags as $tag) {
+            $tagsArray[] = $tag->name;
+        }
+
+        $tags = Tag::all();
+
         $post = Article::where('slug', $slug)->first();
 
-        return view('admin.edit', compact("post"));
+        return view('admin.edit', compact("post", "tags", "tagsArray"));
     }
 
     /**
@@ -115,12 +133,16 @@ class HomeController extends Controller
 
         
         $post = Article::find($id);
+
         $post->title = $data['title'];
         if(array_key_exists ('image',$data) == true) {
             $path = Storage::disk('public')->putFile('images', $data['image']);
             $post->image = $path;
         }
         $post->content = $data['content'];
+        if(count($data["tags"]) > 0) {
+            $post->tags()->sync($data["tags"]);
+        }
         $post->slug = Str::of($post->title)->slug('-');
 
         $post->update();
